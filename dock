@@ -1,0 +1,45 @@
+#!/bin/bash
+
+IMAGE_NAME="vaalen782_c_features"
+CONTAINER_NAME="c_features"
+HOME_PATH="./content/home"
+INCLUDE_PATH="./content/include"
+SRC_PATH="./content/src"
+
+
+function build-and-start {
+	docker build -t ${IMAGE_NAME} .
+
+	docker run -it \
+	-v ${HOME_PATH}:/home \
+	-v ${INCLUDE_PATH}:/usr/local/include \
+	-v ${SRC_PATH}:/usr/local/src \
+	--name ${CONTAINER_NAME} ${IMAGE_NAME}
+}
+
+
+function start {
+	docker start -ai ${CONTAINER_NAME}
+}
+
+
+function remove {
+	docker rm ${CONTAINER_NAME}
+}
+
+
+function show_usage {
+	echo "Usage: ./dock {build-and-start|start|remove}"
+}
+
+
+if [[ $# != 1 ]]; then
+	show_usage
+else
+	case $1 in
+		build-and-start) build-and-start ;;
+		start) start ;;
+		remove) remove ;;
+		*) show_usage ;;
+	esac
+fi
