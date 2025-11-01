@@ -12,7 +12,7 @@ What if you want to use C for almost everything? :)
   - Tuple.
   - Set.
   - Dictionary.
-- More things with strings.
+- String as abstract type.
 - Dynamic file reader (normal and CSV-like).
 - Custom menu display in terminal.
 - More I/O features:
