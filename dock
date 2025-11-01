@@ -2,7 +2,7 @@
 
 IMAGE_NAME="vaalen782_c_features"
 CONTAINER_NAME="c_features"
-HOME_PATH="./content/home"
+HOME_PATH="./content/user"
 INCLUDE_PATH="./content/include"
 SRC_PATH="./content/src"
 
