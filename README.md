@@ -12,6 +12,8 @@ What if you want to use C for almost everything? :)
   - Tuple.
   - Set.
   - Dictionary.
+  - Vector.
+  - Matrix.
 - String as abstract type.
 - Dynamic file reader (normal and CSV-like).
 - Custom menu display in terminal.
