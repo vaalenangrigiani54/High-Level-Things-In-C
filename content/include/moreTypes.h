@@ -52,21 +52,5 @@
     #define TAB '\t'
 #endif
 
-#ifndef UP_ARROW
-    #define UP_ARROW 256
-#endif
-
-#ifndef DOWN_ARROW
-    #define DOWN_ARROW 257
-#endif
-
-#ifndef LEFT_ARROW
-    #define LEFT_ARROW 258
-#endif
-
-#ifndef RIGHT_ARROW
-    #define RIGHT_ARROW 259
-#endif
-
 
 #endif // MORE_TYPES_H
