@@ -3,13 +3,13 @@
 #include <string.h>
 
 
-static void* clone_aux(const void* ptr, size_t size) {
-    if (ptr == NULL) return NULL;
+static __ptr_t clone_aux(const __ptr_t p, size_t size) {
+    if (p == NULL) return NULL;
 
-    void* cloned = malloc(size);
+    __ptr_t cloned = malloc(size);
     if (cloned == NULL) return NULL;
 
-    memcpy(cloned, ptr, size);
+    memcpy(cloned, p, size);
     return cloned;
 }
 

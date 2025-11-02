@@ -22,7 +22,7 @@ int32_t compare_character(const char* c1, const char* c2);
 
 int32_t compare_charSequence(const char* str1, const char* str2);
 
-int32_t compare_pointer(const __ptr_t* p1, const __ptr_t* p2);
+int32_t compare_pointer(const __ptr_t p1, const __ptr_t p2);
 
 
 #endif // COMPARATORS_H

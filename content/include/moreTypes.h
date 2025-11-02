@@ -31,7 +31,7 @@
 
 #ifndef T_FUNC_HASH
     // Function type for hashers.
-    typedef int64_t (*funcHash_t)(const __ptr_t);
+    typedef uint64_t (*funcHash_t)(const __ptr_t);
     #define T_FUNC_HASH funcHash_t
 #endif
 

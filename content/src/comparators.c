@@ -51,7 +51,7 @@ int32_t compare_charSequence(const char* str1, const char* str2) {
     return (int32_t) strcmp(str1, str2);
 }
 
-int32_t compare_pointer(const __ptr_t* p1, const __ptr_t* p2) {
+int32_t compare_pointer(const __ptr_t p1, const __ptr_t p2) {
     if (p1 == p2) return 0;
     return (p1 > p2) ? 1 : -1;
 }
