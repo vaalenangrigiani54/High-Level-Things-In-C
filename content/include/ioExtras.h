@@ -56,4 +56,44 @@ void clear_screen();
 void callback_loop(int32_t (*callback)(int32_t, __ptr_t), __ptr_t arg, uint32_t fps);
 
 
+/*
+Example usage:
+```c
+    ...
+
+    int main() {
+        ...
+        return 0;
+    }
+
+    EXECUTE_BEFORE_MAIN(setUp) {
+        // Code for setting up things before main
+    }
+```
+*/
+#define EXECUTE_BEFORE_MAIN(func_name) \
+    void __##func_name##_execute_before_main__() __attribute__ ((constructor)); \
+    void __##func_name##_execute_before_main__()
+
+
+/*
+Example usage:
+```c
+    ...
+
+    int main() {
+        ...
+        return 0;
+    }
+
+    EXECUTE_AFTER_MAIN(setUp) {
+        // Code for tearing down things after main
+    }
+```
+*/
+#define EXECUTE_AFTER_MAIN(func_name) \
+    void __##func_name##_execute_after_main__() __attribute__ ((destructor)); \
+    void __##func_name##_execute_after_main__()
+
+
 #endif // IO_EXTRAS_H
