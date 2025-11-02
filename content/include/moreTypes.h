@@ -25,7 +25,7 @@
 
 #ifndef T_FUNC_COMPARE
     // Function type for comparators.
-    typedef int64_t (*funcCompare_t)(const __ptr_t, const __ptr_t);
+    typedef int32_t (*funcCompare_t)(const __ptr_t, const __ptr_t);
     #define T_FUNC_COMPARE funcCompare_t
 #endif
 
