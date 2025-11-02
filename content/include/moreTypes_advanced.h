@@ -32,9 +32,9 @@ funcHash_t type_getHashFunction(type_t type);
 
 
 // You may use TYPE_REGISTER instead. It does the same thing but before main scope.
-void __type_register__(type_t* type, funcClone_t cloneFunction, funcDelete_t deleteFunction, funcCompare_t compareFunction, funcHash_t hashFunction);
+static void __type_register__(type_t* type, funcClone_t cloneFunction, funcDelete_t deleteFunction, funcCompare_t compareFunction, funcHash_t hashFunction) __attribute__((__nonnull(1 2 3)));
 
-#define TYPE_REGISTER(type_name, reference_to_type_t, cloneFunction, deleteFunction, compareFunction, hashFunction) \
+#define REGISTER_NEW_TYPE(type_name, reference_to_type_t, cloneFunction, deleteFunction, compareFunction, hashFunction) \
     EXECUTE_BEFORE_MAIN(type_name) { \
         __type_register__(reference_to_type_t, \
         (funcClone_t) cloneFunction, \

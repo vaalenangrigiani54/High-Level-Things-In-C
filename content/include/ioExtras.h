@@ -2,6 +2,8 @@
 #define IO_EXTRAS_H
 
 #include <moreTypes.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #ifndef UP_ARROW
     #define UP_ARROW 256
