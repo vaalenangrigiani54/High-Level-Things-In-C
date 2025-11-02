@@ -1,4 +1,4 @@
-# WIP...
+# Version: 1.0 (WIP)
 
 # High-Level-Things-In-C
 
@@ -11,10 +11,7 @@ What if you want to use C for almost everything? :)
   - List (array and double-linked).
   - Tuple.
   - Set.
-  - Dictionary.
 - String as abstract type.
-- Dynamic file reader (normal and CSV-like).
-- Custom menu display in terminal.
 - More I/O features:
   - Setting up things before main and tearing down after main.
   - Custom colors and styles (ANSI characters).
