@@ -241,7 +241,9 @@ bool callbackLoop(int32_t (*callback)(int32_t, __ptr_t), __ptr_t arg, uint32_t f
 		input = ioExtrasAux_nextKey();
 	} while (callback(input, arg) != 0);
 
-	ioExtrasAux_restoreConsole(&oldt);
+	if (!ioExtrasAux_restoreConsole(&oldt))
+        return false;
+
     if (fcntl(STDIN_FILENO, F_SETFL, 0) == -1) {
         perror("fcntl");
         return false;
