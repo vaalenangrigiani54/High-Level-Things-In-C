@@ -40,7 +40,7 @@ static void __type_register__(type_t* type, funcClone_t cloneFunction, funcDelet
         (funcClone_t) cloneFunction, \
         (funcDelete_t) deleteFunction, \
         (funcCompare_t) compareFunction, \
-        (funcHash_t) hashFunction) \
+        (funcHash_t) hashFunction); \
     }
 
 
