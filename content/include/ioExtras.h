@@ -23,39 +23,52 @@
 
 
 // Input for 8-bit integers.
-bool read_int8(const char* inputText, int8_t* output);
+bool read_int8(const char* inputText, int8_t* output, FILE* stream);
 // Input for 16-bit integers.
-bool read_int16(const char* inputText, int16_t* output);
+bool read_int16(const char* inputText, int16_t* output, FILE* stream);
 // Input for 32-bit integers.
-bool read_int32(const char* inputText, int32_t* output);
+bool read_int32(const char* inputText, int32_t* output, FILE* stream);
 // Input for 64-bit integers.
-bool read_int64(const char* inputText, int64_t* output);
+bool read_int64(const char* inputText, int64_t* output, FILE* stream);
 // Input for single precision floating point numbers.
-bool read_float(const char* inputText, float* output);
+bool read_float(const char* inputText, float* output, FILE* stream);
 // Input for double precision floating point numbers.
-bool read_double64(const char* inputText, double* output);
+bool read_double64(const char* inputText, double* output, FILE* stream);
 // Input for extended precision floating point numbers.
-bool read_double80(const char* inputText, long double* output);
+bool read_double80(const char* inputText, long double* output, FILE* stream);
 // Input for single characters.
-bool read_character(const char* inputText, char* output);
+bool read_character(const char* inputText, char* output, FILE* stream);
 // Input for strings (wrapper of fgets).
-bool read_string(const char* inputText, char* output, int32_t max_size);
+bool read_string(const char* inputText, char* buffer, int32_t bufferSize, FILE* stream);
 
 // Clears the terminal screen.
-void clear_screen();
+void clearScreen();
+
+// Hides the cursor in terminal.
+void hideCursor();
+
+// Shows the cursor in terminal.
+void showCursor();
+
+/**
+ * Waits until any key is pressed.
+ * 
+ * @returns The pressed key code. `0` if error.
+ */
+int32_t waitForKeyPressed();
 
 /**
  * Executes a function in a loop at a specified framerate.
  * 
- * @param callback (NOT NULL) The callback function. Receives the pressed key code (0 if no pressed key) at that frame and optional arguments.
+ * @param callback (NOT NULL) The callback function. Receives the pressed key code (`0` if no pressed key) at that frame and optional arguments.
  * @param arg A pointer to the optional arguments. Use a struct if you want to send more than one argument.
- * @param fps The amount of times per second in which 'callback' is called.
+ * @param fps The amount of times per second in which `callback` is called.
  * 
- * NOTE: To stop the loop, the callback function must return 0.
+ * @returns `true` if successful. Otherwise `false`.
  * 
- * Doesn't do anything if arguments are invalid.
+ * @note `callback` must return `0` to stop the iteration.
  */
-void callback_loop(int32_t (*callback)(int32_t, __ptr_t), __ptr_t arg, uint32_t fps);
+bool callbackLoop(int32_t (*callback)(int32_t, __ptr_t), __ptr_t arg, uint32_t fps);
 
 
 /*
