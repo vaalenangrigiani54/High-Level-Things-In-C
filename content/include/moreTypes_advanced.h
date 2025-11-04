@@ -3,6 +3,7 @@
 
 #include <ioExtras.h>
 
+
 // Enumeration for types.
 typedef enum __types_enum__ {
     TYPE_INT8, // int8_t | uint8_t
@@ -13,8 +14,8 @@ typedef enum __types_enum__ {
     TYPE_DOUBLE64, // double
     TYPE_DOUBLE80, // long double
     TYPE_CHARACTER, // char
-    TYPE_STRING, // String
     TYPE_CHAR_SEQUENCE, // char[]
+    TYPE_STRING, // String*
     TYPE_LIST, // List*
     TYPE_TUPLE, // Tuple*
     TYPE_SET, // Set*
