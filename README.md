@@ -1,6 +1,4 @@
-# Version: 1.0 (WIP)
-
-# High-Level-Things-In-C
+# (WIP) High-Level-Things-In-C
 
 What if you want to use C for almost everything? :)
 
