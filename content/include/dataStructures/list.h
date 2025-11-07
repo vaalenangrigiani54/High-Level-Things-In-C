@@ -15,7 +15,9 @@
 
 // clone_list(), delete_list() and compare_list() declared in <dataStructures/types.h>
 
-T_LIST* new_list(type_t type);
+T_LIST* new_arrayList(type_t type, size_t initialCapacity);
+
+T_LIST* new_linkedList(type_t type);
 
 bool list_enableDeepCopyMode(T_LIST* list, bool enabled);
 
@@ -59,6 +61,8 @@ __ptr_t list_find(const T_LIST* list, T_FUNC_COMPARE cmp, const __ptr_t criteria
 #define list_find_(list, cmp, criteria, pos, type_cast) *(type_cast*) list_find(list, (T_FUNC_COMPARE) cmp, criteria, pos)
 
 int64_t list_sum(const T_LIST* list, int64_t (*func)(__ptr_t, __ptr_t), __ptr_t arg);
+
+T_LIST* list_filter(const T_LIST* list, bool (*filter)(__ptr_t, __ptr_t), __ptr_t arg);
 
 T_LIST* list_extend(T_LIST* list, const T_LIST* newElements, bool cloneList);
 
