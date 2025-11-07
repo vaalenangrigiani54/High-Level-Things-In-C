@@ -29,14 +29,17 @@ bool list_addFirst(T_LIST* list, __ptr_t element);
 
 bool list_addLast(T_LIST* list, __ptr_t element);
 
-bool list_get(const T_LIST* list, size_t pos);
+__ptr_t list_get(const T_LIST* list, size_t pos);
 #define list_get_(list, pos, type_cast) *(type_cast*) list_get(list, pos)
 
-bool list_getFirst(const T_LIST* list);
+__ptr_t list_getFirst(const T_LIST* list);
 #define list_getFirst_(list, type_cast) *(type_cast*) list_getFirst(list)
 
-bool list_getLast(const T_LIST* list);
+__ptr_t list_getLast(const T_LIST* list);
 #define list_getLast_(list, type_cast) *(type_cast*) list_getLast(list)
+
+__ptr_t list_getRandom(const T_LIST* list);
+#define list_getRandom_(list, type_cast) *(type_cast*) list_getRandom(list)
 
 __ptr_t list_remove(T_LIST* list, size_t pos);
 #define list_remove_(list, pos, type_cast) *(type_cast*) list_remove(list, pos)
