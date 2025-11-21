@@ -23,7 +23,10 @@ T_STRING* new_str(const char* charSequence) {
 
     str->size = strlen(charSequence);
     str->seq = malloc((str->size + 1) * sizeof(char));
-    if (str->seq == NULL) return NULL;
+    if (str->seq == NULL) {
+        free(str);
+        return NULL;
+    }
 
     memcpy(str->seq, charSequence, str->size + 1);
     return str;

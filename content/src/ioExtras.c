@@ -193,6 +193,17 @@ bool read_string(const char* inputText, char* buffer, int32_t bufferSize, FILE* 
 }
 
 
+bool reallocate(__ptr_t* ptr, size_t bytes) {
+    if (ptr == NULL || bytes == 0) return false;
+
+    __ptr_t aux = realloc(*ptr, bytes);
+    if (aux == NULL) return false;
+
+    *ptr = aux;
+    return true;
+}
+
+
 void clearScreen() {
     printf("\x1b[2J\x1b[H");
     fflush(stdout);

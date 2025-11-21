@@ -41,6 +41,9 @@ bool read_character(const char* inputText, char* output, FILE* stream);
 // Input for strings (wrapper of fgets).
 bool read_string(const char* inputText, char* buffer, int32_t bufferSize, FILE* stream);
 
+// Wrapper of `realloc()`. The old pointer is replaced directly by the reallocated one.
+bool reallocate(__ptr_t* ptr, size_t bytes);
+
 // Clears the terminal screen.
 void clearScreen();
 
