@@ -4,7 +4,7 @@ What if you want to use C for almost everything? :)
 
 ## What includes?
 
-- Memory and Exceptions manager. Garbage collection.
+- Error / Exception manager.
 - Dynamic data structures:
   - List (array and double-linked).
   - Tuple.
