@@ -13,11 +13,9 @@
 /*----------------------------------------- BASIC FUNCTIONS -----------------------------------------*/
 /*===================================================================================================*/
 
+T_LIST* new_list(type_t type);
+
 // clone_list(), delete_list() and compare_list() declared in <dataStructures/types.h>
-
-T_LIST* new_arrayList(type_t type, size_t initialCapacity);
-
-T_LIST* new_linkedList(type_t type);
 
 bool list_enableDeepCopyMode(T_LIST* list, bool enabled);
 

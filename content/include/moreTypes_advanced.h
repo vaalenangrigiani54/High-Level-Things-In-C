@@ -17,6 +17,7 @@ typedef enum __types_enum__ {
     TYPE_CHAR_SEQUENCE, // char[]
     TYPE_STRING, // String*
     TYPE_LIST, // List*
+    TYPE_ARRAY, // Array*
     TYPE_TUPLE, // Tuple*
     TYPE_SET, // Set*
     TYPE_ARBITRARY // Any unregistered type
