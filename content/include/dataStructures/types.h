@@ -71,7 +71,7 @@ int32_t compare_set(const T_SET* set1, const T_SET* set2);
 /*-------------------- HASHERS --------------------*/
 /*=================================================*/
 
-// Use hash_charSequence() from <hash.h> to hash strings.
+int64_t hash_str(const T_STRING* str);
 
 int64_t hash_tuple(const T_TUPLE* tuple);
 
