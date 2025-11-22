@@ -204,6 +204,14 @@ bool array_enableDeepCopyMode(T_ARRAY* array, bool enabled) {
 }
 
 
+bool array_markElementAsDeepCopied(T_ARRAY* array, size_t pos, bool deepCopied) {
+    if (array == NULL || pos >= array->size) return false;
+
+    array->deepCopied[pos] = deepCopied;
+    return true;
+}
+
+
 void array_clear(T_ARRAY* array) {
     if (array == NULL) return;
 

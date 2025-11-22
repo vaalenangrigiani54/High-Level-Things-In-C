@@ -1,8 +1,7 @@
 #ifndef STRING_DATA_STRUCTURE_H
 #define STRING_DATA_STRUCTURE_H
 
-#include <dataStructures/types.h>
-#include <moreTypes.h>
+#include <dataStructures/array.h>
 
 
 T_STRING* new_str(const char* charSequence);
@@ -23,7 +22,7 @@ T_STRING* str_toUpper(T_STRING* str, bool cloneStr);
 
 T_STRING* str_toLower(T_STRING* str, bool cloneStr);
 
-T_STRING** str_split(const T_STRING* str, const char* delim, size_t* amount);
+T_ARRAY* str_split(const T_STRING* str, const char* delim);
 
 #define ITERATE_STRING(str, c, idx) \
     for (size_t idx = 0, char c = str_charAt(str, idx); c != END_STRING; idx++, c = str_charAt(str, idx))

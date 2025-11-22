@@ -130,20 +130,19 @@ T_STRING* str_toLower(T_STRING* str, bool cloneStr) {
 }
 
 
-T_STRING** str_split(const T_STRING* str, const char* delim, size_t* amount) {
-    if (str == NULL || delim == NULL || amount == NULL) return NULL;
+T_ARRAY* str_split(const T_STRING* str, const char* delim) {
+    if (str == NULL || delim == NULL) return NULL;
 
-    size_t i = strlen(delim);
+    size_t i = strlen(delim), amount = 0;
     if (i == 0) return NULL;
 
-    *amount = 1;
     const char* temp = str->seq;
     while ((temp = strstr(temp, delim)) != NULL) {
-        (*amount)++;
+        amount++;
         temp += i;
     }
 
-    T_STRING** substrings = malloc(*amount * sizeof(T_STRING*));
+    T_ARRAY* substrings = new_array(TYPE_STRING, amount);
     if (substrings == NULL) return NULL;
 
     i = 0;
@@ -152,17 +151,16 @@ T_STRING** str_split(const T_STRING* str, const char* delim, size_t* amount) {
     temp = strtok(buffer, delim);
 
     while (temp != NULL) {
-        substrings[i] = new_str(temp);
+        array_addLast(substrings, new_str(temp));
 
-        if (substrings[i] == NULL) {
-            for (size_t j = 0; j < i; j++)
-                delete_str(substrings[j]);
-            
-            free(substrings);
+        if (!array_markElementAsDeepCopied(substrings, i, true)) {
+            delete_array(substrings);
             return NULL;
         }
 
         temp = strtok(NULL, delim);
         i++;
     }
+
+    return substrings;
 }
