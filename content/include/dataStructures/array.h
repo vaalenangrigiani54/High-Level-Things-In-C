@@ -4,10 +4,6 @@
 #include <dataStructures/types.h>
 #include <moreTypes_advanced.h>
 
-#ifndef arrayIterator_t
-    #define arrayIterator_t struct __arrayIter__*
-#endif
-
 
 /*===================================================================================================*/
 /*----------------------------------------- BASIC FUNCTIONS -----------------------------------------*/
@@ -19,7 +15,7 @@ T_ARRAY* new_array(type_t type, size_t initialCapacity);
 
 bool array_enableDeepCopyMode(T_ARRAY* array, bool enabled);
 
-bool array_clear(T_ARRAY* array);
+void array_clear(T_ARRAY* array);
 
 size_t array_size(const T_ARRAY* array);
 
@@ -62,33 +58,15 @@ int64_t array_sum(const T_ARRAY* array, int64_t (*func)(__ptr_t, __ptr_t), __ptr
 
 T_ARRAY* array_filter(const T_ARRAY* array, bool (*filter)(__ptr_t, __ptr_t), __ptr_t arg);
 
-T_ARRAY* array_extend(T_ARRAY* array, const T_ARRAY* newElements, bool clonearray);
+T_ARRAY* array_extend(T_ARRAY* array, const T_ARRAY* newElements, bool cloneArray);
 
-T_ARRAY* array_sort(T_ARRAY* array, bool clonearray);
+T_ARRAY* array_reverse(T_ARRAY* array, bool cloneArray);
 
-T_ARRAY* array_sortByKey(T_ARRAY* array, T_FUNC_COMPARE cmp, bool clonearray);
+T_ARRAY* array_sort(T_ARRAY* array, bool cloneArray);
 
-T_ARRAY* array_shuffle(T_ARRAY* array, bool clonearray);
+T_ARRAY* array_sortByKey(T_ARRAY* array, T_FUNC_COMPARE cmp, bool cloneArray);
 
-
-/*====================================================================================================*/
-/*---------------------------------------- ITERATOR FUNCTIONS ----------------------------------------*/
-/*====================================================================================================*/
-
-arrayIterator_t arrayIter_begin(T_ARRAY* associated);
-
-arrayIterator_t arrayIter_end(T_ARRAY* associated);
-
-bool arrayIter_next(arrayIterator_t iter);
-
-bool arrayIter_back(arrayIterator_t iter);
-
-bool arrayIter_hasNext(const arrayIterator_t iter);
-
-__ptr_t arrayIter_get(const arrayIterator_t iter);
-#define arrayIter_get_(iter, type_cast) *(type_cast*) arrayIter_get(iter)
-
-size_t arrayIter_getPos(const arrayIterator_t iter);
+T_ARRAY* array_shuffle(T_ARRAY* array, bool cloneArray);
 
 
 #endif // ARRAY_DATA_STRUCTURE_H
