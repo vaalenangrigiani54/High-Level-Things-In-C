@@ -4,6 +4,7 @@
 #include <termios.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <time.h>
 
 
 /*===================================================================================================*/
@@ -16,7 +17,7 @@ static bool ioExtrasAux_readInteger(const char* inputText, long long* output, ui
         return false;
     
     char buffer[(bytes << 3) * sizeof(char)];
-    if (!read_string(inputText, buffer, sizeof(buffer), stream))
+    if (!read_string(inputText, buffer, (int32_t) sizeof(buffer), stream))
         return false;
 
     *output = atoll(buffer);
@@ -29,7 +30,7 @@ static bool ioExtrasAux_readFloat(const char* inputText, long double* output, ui
         return false;
     
     char buffer[(bytes << 3) * sizeof(char)];
-    if (!read_string(inputText, buffer, sizeof(buffer), stream))
+    if (!read_string(inputText, buffer, (int32_t) sizeof(buffer), stream))
         return false;
 
     *output = strtold(buffer, NULL);
@@ -46,7 +47,7 @@ static bool ioExtrasAux_initConsole(struct termios* oldt) {
     }
 
 	newt = *oldt;
-	newt.c_lflag &= ~(ICANON | ECHO);
+	newt.c_lflag &= (tcflag_t) ~(ICANON | ECHO);
 
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &newt) == -1) {
         perror("tcsetattr");
@@ -116,7 +117,7 @@ bool read_int32(const char* inputText, int32_t* output, FILE* stream) {
     long long n;
     if (!ioExtrasAux_readInteger(inputText, &n, sizeof(int32_t), stream))
         return false;
-
+    
     *output = (int32_t) n;
     return true;
 }
@@ -204,6 +205,18 @@ bool reallocate(__ptr_t* ptr, size_t bytes) {
 }
 
 
+void sleep_millis(uint64_t milliseconds) {
+    time_t seconds = (time_t) milliseconds / 1000;
+    milliseconds %= 1000;
+    time_t nanos = (time_t) milliseconds * 1000000;
+
+    struct timespec ts;
+    ts.tv_sec = seconds;
+    ts.tv_nsec = nanos;
+    nanosleep(&ts, NULL);
+}
+
+
 void clearScreen() {
     printf("\x1b[2J\x1b[H");
     fflush(stdout);
@@ -240,15 +253,18 @@ bool callbackLoop(int32_t (*callback)(int32_t, __ptr_t), __ptr_t arg, uint32_t f
     
     int32_t input = 0;
 	struct termios oldt;
+    struct timespec ts;
+    ts.tv_sec = (fps == 1) ? 1 : 0;
+    ts.tv_nsec = (fps == 1) ? 0 : 1000000000 / fps;
 
-    if (!ioExtrasAux_initConsole(&oldt)) return;
+    if (!ioExtrasAux_initConsole(&oldt)) return false;
     if (fcntl(STDIN_FILENO, F_SETFL, O_NONBLOCK) == -1) {
         perror("fcntl");
         return false;
     }
 
 	do {
-		usleep(1000000 / fps);
+		nanosleep(&ts, NULL);
 		input = ioExtrasAux_nextKey();
 	} while (callback(input, arg) != 0);
 

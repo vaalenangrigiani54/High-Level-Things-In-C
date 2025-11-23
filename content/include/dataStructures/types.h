@@ -87,9 +87,9 @@ int32_t compare_set(const T_SET* set1, const T_SET* set2);
 /*-------------------- HASHERS --------------------*/
 /*=================================================*/
 
-int64_t hash_str(const T_STRING* str);
+uint64_t hash_str(const T_STRING* str);
 
-int64_t hash_tuple(const T_TUPLE* tuple);
+uint64_t hash_tuple(const T_TUPLE* tuple);
 
 
 #endif // DATA_STRUCTURES_TYPES_H

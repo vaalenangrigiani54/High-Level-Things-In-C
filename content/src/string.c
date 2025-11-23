@@ -54,7 +54,7 @@ int32_t compare_str(const T_STRING* str1, const T_STRING* str2) {
 }
 
 
-int64_t hash_str(const T_STRING* str) {
+uint64_t hash_str(const T_STRING* str) {
     return (str == NULL) ? 0 : hash_charSequence(str->seq);
 }
 
@@ -107,8 +107,8 @@ T_STRING* str_toUpper(T_STRING* str, bool cloneStr) {
     for (size_t i = 0; i < str->size; i++) {
         char c = str->seq[i];
 
-        if (c >= "a" && c <= "z")
-            str->seq[i] = c + ("A" - "a");
+        if (c >= 'a' && c <= 'z')
+            str->seq[i] = c + ('A' - 'a');
     }
 
     return strAux;
@@ -122,8 +122,8 @@ T_STRING* str_toLower(T_STRING* str, bool cloneStr) {
     for (size_t i = 0; i < str->size; i++) {
         char c = str->seq[i];
 
-        if (c >= "A" && c <= "Z")
-            str->seq[i] = c + ("a" - "A");
+        if (c >= 'A' && c <= 'Z')
+            str->seq[i] = c + ('a' - 'A');
     }
 
     return strAux;

@@ -34,7 +34,7 @@ funcHash_t type_getHashFunction(type_t type);
 
 
 // You may use REGISTER_NEW_TYPE instead. It does the same thing but before main scope.
-static void __type_register__(type_t* type, funcClone_t cloneFunction, funcDelete_t deleteFunction, funcCompare_t compareFunction, funcHash_t hashFunction) __attribute__((__nonnull(1 2 3)));
+void __type_register__(type_t* type, funcClone_t cloneFunction, funcDelete_t deleteFunction, funcCompare_t compareFunction, funcHash_t hashFunction);
 
 /**
  * Adds a new type with custom clone/delete/compare/hash functions.

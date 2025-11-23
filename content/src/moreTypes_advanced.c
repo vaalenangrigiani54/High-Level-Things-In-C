@@ -6,10 +6,10 @@
 #include <unistd.h>
 
 typedef struct __registered_type__ {
-    funcClone_t* _clone_;
-    funcDelete_t* _delete_;
-    funcCompare_t* _compare_;
-    funcHash_t* _hash_;
+    funcClone_t _clone_;
+    funcDelete_t _delete_;
+    funcCompare_t _compare_;
+    funcHash_t _hash_;
 } registeredType_t;
 
 static registeredType_t* registeredTypes = NULL;
@@ -19,21 +19,21 @@ static int registeredTypes_capacity = 0;
 
 funcClone_t type_getCloneFunction(type_t type) {
     switch (type) {
-        case TYPE_INT8: return clone_int8;
-        case TYPE_INT16: return clone_int16;
-        case TYPE_INT32: return clone_int32;
-        case TYPE_INT64: return clone_int64;
-        case TYPE_FLOAT: return clone_float;
-        case TYPE_DOUBLE64: return clone_double64;
-        case TYPE_DOUBLE80: return clone_double80;
-        case TYPE_CHARACTER: return clone_character;
-        case TYPE_CHAR_SEQUENCE: return clone_charSequence;
-        case TYPE_STRING: return clone_str;
-        case TYPE_LIST: return clone_list;
-        case TYPE_TUPLE: return clone_tuple;
-        case TYPE_SET: return clone_set;
+        case TYPE_INT8: return (funcClone_t) clone_int8;
+        case TYPE_INT16: return (funcClone_t) clone_int16;
+        case TYPE_INT32: return (funcClone_t) clone_int32;
+        case TYPE_INT64: return (funcClone_t) clone_int64;
+        case TYPE_FLOAT: return (funcClone_t) clone_float;
+        case TYPE_DOUBLE64: return (funcClone_t) clone_double64;
+        case TYPE_DOUBLE80: return (funcClone_t) clone_double80;
+        case TYPE_CHARACTER: return (funcClone_t) clone_character;
+        case TYPE_CHAR_SEQUENCE: return (funcClone_t) clone_charSequence;
+        case TYPE_STRING: return (funcClone_t) clone_str;
+        case TYPE_LIST: return (funcClone_t) clone_list;
+        case TYPE_TUPLE: return (funcClone_t) clone_tuple;
+        case TYPE_SET: return (funcClone_t) clone_set;
         default: {
-            int idx = type - TYPE_ARBITRARY - 1;
+            int32_t idx = (int32_t) type - TYPE_ARBITRARY - 1;
             return (idx >= 0 && idx < registeredTypes_size) ? registeredTypes[idx]._clone_ : NULL;
         };
     }
@@ -42,21 +42,21 @@ funcClone_t type_getCloneFunction(type_t type) {
 
 funcDelete_t type_getDeleteFunction(type_t type) {
     switch (type) {
-        case TYPE_INT8: return free;
-        case TYPE_INT16: return free;
-        case TYPE_INT32: return free;
-        case TYPE_INT64: return free;
-        case TYPE_FLOAT: return free;
-        case TYPE_DOUBLE64: return free;
-        case TYPE_DOUBLE80: return free;
-        case TYPE_CHARACTER: return free;
-        case TYPE_CHAR_SEQUENCE: return free;
-        case TYPE_STRING: return delete_str;
-        case TYPE_LIST: return delete_list;
-        case TYPE_TUPLE: return delete_tuple;
-        case TYPE_SET: return delete_set;
+        case TYPE_INT8: return (funcDelete_t) free;
+        case TYPE_INT16: return (funcDelete_t) free;
+        case TYPE_INT32: return (funcDelete_t) free;
+        case TYPE_INT64: return (funcDelete_t) free;
+        case TYPE_FLOAT: return (funcDelete_t) free;
+        case TYPE_DOUBLE64: return (funcDelete_t) free;
+        case TYPE_DOUBLE80: return (funcDelete_t) free;
+        case TYPE_CHARACTER: return (funcDelete_t) free;
+        case TYPE_CHAR_SEQUENCE: return (funcDelete_t) free;
+        case TYPE_STRING: return (funcDelete_t) delete_str;
+        case TYPE_LIST: return (funcDelete_t) delete_list;
+        case TYPE_TUPLE: return (funcDelete_t) delete_tuple;
+        case TYPE_SET: return (funcDelete_t) delete_set;
         default: {
-            int idx = type - TYPE_ARBITRARY - 1;
+            int32_t idx = (int32_t) type - TYPE_ARBITRARY - 1;
             return (idx >= 0 && idx < registeredTypes_size) ? registeredTypes[idx]._delete_ : NULL;
         };
     }
@@ -65,21 +65,21 @@ funcDelete_t type_getDeleteFunction(type_t type) {
 
 funcCompare_t type_getCompareFunction(type_t type) {
     switch (type) {
-        case TYPE_INT8: return compare_int8;
-        case TYPE_INT16: return compare_int16;
-        case TYPE_INT32: return compare_int32;
-        case TYPE_INT64: return compare_int64;
-        case TYPE_FLOAT: return compare_float;
-        case TYPE_DOUBLE64: return compare_double64;
-        case TYPE_DOUBLE80: return compare_double80;
-        case TYPE_CHARACTER: return compare_character;
-        case TYPE_CHAR_SEQUENCE: return compare_charSequence;
-        case TYPE_STRING: return compare_str;
-        case TYPE_LIST: return compare_list;
-        case TYPE_TUPLE: return compare_tuple;
-        case TYPE_SET: return compare_set;
+        case TYPE_INT8: return (funcCompare_t) compare_int8;
+        case TYPE_INT16: return (funcCompare_t) compare_int16;
+        case TYPE_INT32: return (funcCompare_t) compare_int32;
+        case TYPE_INT64: return (funcCompare_t) compare_int64;
+        case TYPE_FLOAT: return (funcCompare_t) compare_float;
+        case TYPE_DOUBLE64: return (funcCompare_t) compare_double64;
+        case TYPE_DOUBLE80: return (funcCompare_t) compare_double80;
+        case TYPE_CHARACTER: return (funcCompare_t) compare_character;
+        case TYPE_CHAR_SEQUENCE: return (funcCompare_t) compare_charSequence;
+        case TYPE_STRING: return (funcCompare_t) compare_str;
+        case TYPE_LIST: return (funcCompare_t) compare_list;
+        case TYPE_TUPLE: return (funcCompare_t) compare_tuple;
+        case TYPE_SET: return (funcCompare_t) compare_set;
         default: {
-            int idx = type - TYPE_ARBITRARY - 1;
+            int32_t idx = (int32_t) type - TYPE_ARBITRARY - 1;
             return (idx >= 0 && idx < registeredTypes_size) ? registeredTypes[idx]._compare_ : NULL;
         };
     }
@@ -88,25 +88,25 @@ funcCompare_t type_getCompareFunction(type_t type) {
 
 funcHash_t type_getHashFunction(type_t type) {
     switch (type) {
-        case TYPE_INT8: return hash_int8;
-        case TYPE_INT16: return hash_int16;
-        case TYPE_INT32: return hash_int32;
-        case TYPE_INT64: return hash_int64;
-        case TYPE_FLOAT: return hash_float;
-        case TYPE_DOUBLE64: return hash_double64;
-        case TYPE_DOUBLE80: return hash_double80;
-        case TYPE_CHARACTER: return hash_character;
-        case TYPE_CHAR_SEQUENCE: return hash_charSequence;
-        case TYPE_TUPLE: return hash_tuple;
+        case TYPE_INT8: return (funcHash_t) hash_int8;
+        case TYPE_INT16: return (funcHash_t) hash_int16;
+        case TYPE_INT32: return (funcHash_t) hash_int32;
+        case TYPE_INT64: return (funcHash_t) hash_int64;
+        case TYPE_FLOAT: return (funcHash_t) hash_float;
+        case TYPE_DOUBLE64: return (funcHash_t) hash_double64;
+        case TYPE_DOUBLE80: return (funcHash_t) hash_double80;
+        case TYPE_CHARACTER: return (funcHash_t) hash_character;
+        case TYPE_CHAR_SEQUENCE: return (funcHash_t) hash_charSequence;
+        case TYPE_TUPLE: return (funcHash_t) hash_tuple;
         default: {
-            int idx = type - TYPE_ARBITRARY - 1;
+            int32_t idx = (int32_t) type - TYPE_ARBITRARY - 1;
             return (idx >= 0 && idx < registeredTypes_size) ? registeredTypes[idx]._hash_ : NULL;
         };
     }
 }
 
 
-static void __type_register__(type_t* type, funcClone_t cloneFunction, funcDelete_t deleteFunction, funcCompare_t compareFunction, funcHash_t hashFunction) {
+void __type_register__(type_t* type, funcClone_t cloneFunction, funcDelete_t deleteFunction, funcCompare_t compareFunction, funcHash_t hashFunction) {
     if (type == NULL) {
         fputs("ERROR: 'type' reference must be non-NULL.\n", stderr);
         free(registeredTypes);

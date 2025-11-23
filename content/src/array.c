@@ -1,4 +1,4 @@
-#include <array.h>
+#include <dataStructures/array.h>
 #include <ioExtras.h>
 #include <comparators.h>
 #include <string.h>
@@ -19,12 +19,13 @@ struct __array__ {
 
 
 static bool aux_array_reallocate(T_ARRAY* array, size_t newCapacity) {
-    if (!reallocate(&array->content, newCapacity * sizeof(__ptr_t)) ||
-        !reallocate(&array->deepCopied, newCapacity * sizeof(bool))) {
+    if (!reallocate((__ptr_t*) &array->content, newCapacity * sizeof(__ptr_t)) ||
+        !reallocate((__ptr_t*) &array->deepCopied, newCapacity * sizeof(bool))) {
             return false;
     }
 
     array->capacity = newCapacity;
+    return true;
 }
 
 
@@ -292,7 +293,7 @@ __ptr_t array_getLast(const T_ARRAY* array) {
 
 
 __ptr_t array_getRandom(const T_ARRAY* array) {
-    return (array == NULL) ? NULL : array->content[rand() % array->size];
+    return (array == NULL) ? NULL : array->content[(size_t) rand() % array->size];
 }
 
 
@@ -336,9 +337,9 @@ __ptr_t array_find(const T_ARRAY* array, T_FUNC_COMPARE cmp, const __ptr_t crite
 
 
 int64_t array_sum(const T_ARRAY* array, int64_t (*func)(__ptr_t, __ptr_t), __ptr_t arg) {
-    if (array == NULL || func == NULL) return NULL;
+    if (array == NULL || func == NULL) return -1;
 
-    size_t sum = 0;
+    int64_t sum = 0;
     for (size_t i = 0; i < array->size; i++)
         sum += func(array->content[i], arg);
 

@@ -47,5 +47,5 @@ char* clone_character(const char* c) {
 }
 
 char* clone_charSequence(const char* str) {
-    return (float*) clone_aux(str, sizeof(char) * (strlen(str) + 1));
+    return (char*) clone_aux(str, sizeof(char) * (strlen(str) + 1));
 }

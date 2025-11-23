@@ -44,6 +44,9 @@ bool read_string(const char* inputText, char* buffer, int32_t bufferSize, FILE* 
 // Wrapper of `realloc()`. The old pointer is replaced directly by the reallocated one.
 bool reallocate(__ptr_t* ptr, size_t bytes);
 
+// Sleeps for a determined number of milliseconds.
+void sleep_millis(uint64_t millis);
+
 // Clears the terminal screen.
 void clearScreen();
 
