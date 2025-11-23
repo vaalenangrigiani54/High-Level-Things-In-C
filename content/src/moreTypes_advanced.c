@@ -30,6 +30,7 @@ funcClone_t type_getCloneFunction(type_t type) {
         case TYPE_CHAR_SEQUENCE: return (funcClone_t) clone_charSequence;
         case TYPE_STRING: return (funcClone_t) clone_str;
         case TYPE_LIST: return (funcClone_t) clone_list;
+        case TYPE_ARRAY: return (funcClone_t) clone_array;
         case TYPE_TUPLE: return (funcClone_t) clone_tuple;
         case TYPE_SET: return (funcClone_t) clone_set;
         default: {
@@ -53,6 +54,7 @@ funcDelete_t type_getDeleteFunction(type_t type) {
         case TYPE_CHAR_SEQUENCE: return (funcDelete_t) free;
         case TYPE_STRING: return (funcDelete_t) delete_str;
         case TYPE_LIST: return (funcDelete_t) delete_list;
+        case TYPE_ARRAY: return (funcDelete_t) delete_array;
         case TYPE_TUPLE: return (funcDelete_t) delete_tuple;
         case TYPE_SET: return (funcDelete_t) delete_set;
         default: {
@@ -76,6 +78,7 @@ funcCompare_t type_getCompareFunction(type_t type) {
         case TYPE_CHAR_SEQUENCE: return (funcCompare_t) compare_charSequence;
         case TYPE_STRING: return (funcCompare_t) compare_str;
         case TYPE_LIST: return (funcCompare_t) compare_list;
+        case TYPE_ARRAY: return (funcCompare_t) compare_array;
         case TYPE_TUPLE: return (funcCompare_t) compare_tuple;
         case TYPE_SET: return (funcCompare_t) compare_set;
         default: {
