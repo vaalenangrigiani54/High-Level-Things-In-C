@@ -208,7 +208,11 @@ T_LIST* clone_list(const T_LIST* list) {
     if (cloned == NULL) return NULL;
 
     cloned->deepCopyMode = list->deepCopyMode;
-    list_extendRight(cloned, list, false);
+    
+    if (!list_extendRight(cloned, list, false)) {
+        delete_list(cloned);
+        return NULL;
+    }
 
     return cloned;
 }

@@ -5,9 +5,9 @@
 
 struct __array__ {
     __ptr_t* content;
-    bool* deepCopied;
     size_t size;
     size_t capacity;
+    bool* deepCopied;
     type_t type;
     bool deepCopyMode;
 };
@@ -135,23 +135,11 @@ T_ARRAY* clone_array(const T_ARRAY* array) {
     T_ARRAY* cloned = new_array(array->type, array->capacity);
     if (cloned == NULL) return NULL;
 
-    T_FUNC_CLONE clone = type_getCloneFunction(array->type);
-
-    if (clone != NULL && array->deepCopyMode) {
-        for (size_t i = 0; i < array->size; i++) {
-            __ptr_t element = (array->content[i] == NULL) ? NULL : clone(array->content[i]);
-
-            if (array->content[i] != NULL && element == NULL) {
-                delete_array(cloned);
-                return NULL;
-            }
-
-            cloned->deepCopied[i] = true;
-            cloned->size++;
-        }
-    } else {
-        memcpy(cloned->content, array->content, array->capacity * sizeof(__ptr_t));
-        cloned->size = array->size;
+    cloned->deepCopyMode = array->deepCopyMode;
+    
+    if (!array_extend(cloned, array, false)) {
+        delete_array(cloned);
+        return NULL;
     }
 
     return cloned;
@@ -383,7 +371,7 @@ T_ARRAY* array_extend(T_ARRAY* array, const T_ARRAY* newElements, bool cloneArra
         }
     }
 
-    bool currentDeepCopyMode = array->deepCopyMode;
+    bool deepCopyModeAux = array->deepCopyMode;
     array->deepCopyMode = newElements->deepCopyMode;
     funcDelete_t delete = type_getDeleteFunction(array->type);
 
@@ -391,7 +379,7 @@ T_ARRAY* array_extend(T_ARRAY* array, const T_ARRAY* newElements, bool cloneArra
         __ptr_t element = newElements->content[i];
 
         if (!array_addLast(array, element)) {
-            array->deepCopyMode = currentDeepCopyMode;
+            array->deepCopyMode = deepCopyModeAux;
 
             if (cloneArray)
                 delete_array(array);
@@ -407,7 +395,7 @@ T_ARRAY* array_extend(T_ARRAY* array, const T_ARRAY* newElements, bool cloneArra
         }
     }
 
-    array->deepCopyMode = currentDeepCopyMode;
+    array->deepCopyMode = deepCopyModeAux;
     return array;
 }
 
