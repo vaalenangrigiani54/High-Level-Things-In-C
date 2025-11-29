@@ -19,7 +19,9 @@ T_LIST* new_list(type_t type);
 
 bool list_enableDeepCopyMode(T_LIST* list, bool enabled);
 
-bool list_clear(T_LIST* list);
+bool list_markElementAsDeepCopied(T_LIST* list, size_t pos, bool deepCopied);
+
+void list_clear(T_LIST* list);
 
 size_t list_size(const T_LIST* list);
 
@@ -62,7 +64,11 @@ int64_t list_sum(const T_LIST* list, int64_t (*func)(__ptr_t, __ptr_t), __ptr_t 
 
 T_LIST* list_filter(const T_LIST* list, bool (*filter)(__ptr_t, __ptr_t), __ptr_t arg);
 
-T_LIST* list_extend(T_LIST* list, const T_LIST* newElements, bool cloneList);
+T_LIST* list_extendLeft(T_LIST* list, const T_LIST* newElements, bool cloneList);
+
+T_LIST* list_extendRight(T_LIST* list, const T_LIST* newElements, bool cloneList);
+
+T_LIST* list_reverse(T_LIST* list, bool cloneList);
 
 T_LIST* list_sort(T_LIST* list, bool cloneList);
 
