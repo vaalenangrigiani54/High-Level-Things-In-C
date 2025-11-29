@@ -129,14 +129,12 @@ void __type_register__(type_t* type, funcClone_t cloneFunction, funcDelete_t del
     }
     
     if (registeredTypes_size >= registeredTypes_capacity) {
-        registeredType_t* aux = realloc(registeredTypes, (size_t) (registeredTypes_capacity + 8) * sizeof(registeredType_t));
-        if (aux == NULL) {
+        if (!reallocate((void**) &registeredTypes, (size_t) (registeredTypes_capacity + 8) * sizeof(registeredType_t))) {
             perror("TYPE_REGISTER");
             free(registeredTypes);
             exit(1);
         }
 
-        registeredTypes = aux;
         registeredTypes_capacity += 8;
     }
 
@@ -145,6 +143,7 @@ void __type_register__(type_t* type, funcClone_t cloneFunction, funcDelete_t del
     registeredTypes[registeredTypes_size]._compare_ = compareFunction;
     registeredTypes[registeredTypes_size]._hash_ = hashFunction;
     registeredTypes_size++;
+    *type = TYPE_ARBITRARY + registeredTypes_size;
 }
 
 
