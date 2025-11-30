@@ -1,4 +1,6 @@
 #include <dataStructures/array.h>
+#include <dataStructures/list.h>
+#include <dataStructures/tuple.h>
 #include <ioExtras.h>
 #include <comparators.h>
 #include <string.h>
@@ -129,6 +131,49 @@ T_ARRAY* new_array(type_t type, size_t initialCapacity) {
 }
 
 
+T_ARRAY* new_array_fromLinkedList(const T_LIST* list) {
+    if (list == NULL) return NULL;
+
+    T_ARRAY* array = new_array(list_type(list), list_size(list));
+    if (array == NULL) return NULL;
+
+    array->deepCopyMode = list_deepCopyMode(list);
+    listIterator_t i = listIter_begin(list);
+
+    while (listIter_hasNext(i)) {
+        __ptr_t element = listIter_get(i);
+
+        if (!array_addLast(array, element)) {
+            delete_array(array);
+            return NULL;
+        }
+
+        listIter_next(i);
+    }
+
+    return array;
+}
+
+
+T_ARRAY* new_array_fromTuple(const T_TUPLE* tuple) {
+    if (tuple == NULL) return NULL;
+
+    T_ARRAY* array = new_array(tuple_type(tuple), tuple_size(tuple));
+    if (array == NULL) return NULL;
+
+    array->deepCopyMode = tuple_deepCopyMode(tuple);
+
+    for (size_t i = 0; i < array->size; i++) {
+        if (!array_addLast(array, tuple_get(tuple, i))) {
+            delete_array(array);
+            return NULL;
+        }
+    }
+
+    return array;
+}
+
+
 T_ARRAY* clone_array(const T_ARRAY* array) {
     if (array == NULL) return NULL;
 
@@ -193,6 +238,11 @@ bool array_enableDeepCopyMode(T_ARRAY* array, bool enabled) {
 }
 
 
+bool array_deepCopyMode(const T_ARRAY* array) {
+    return (array == NULL) ? false : array->deepCopyMode;
+}
+
+
 bool array_markElementAsDeepCopied(T_ARRAY* array, size_t pos, bool deepCopied) {
     if (array == NULL || pos >= array->size) return false;
 
@@ -221,6 +271,11 @@ void array_clear(T_ARRAY* array) {
 
 size_t array_size(const T_ARRAY* array) {
     return (array == NULL) ? 0 : array->size;
+}
+
+
+type_t array_type(const T_ARRAY* array) {
+    return (array == NULL) ? TYPE_ARBITRARY : array->type;
 }
 
 

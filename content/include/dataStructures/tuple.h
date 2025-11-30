@@ -13,9 +13,17 @@
 
 T_TUPLE* new_tuple(size_t size, bool cloneElements, type_t type, ...);
 
+T_TUPLE* new_tuple_fromArray(const T_ARRAY* array);
+
+T_TUPLE* new_tuple_fromLinkedList(const T_LIST* list);
+
 bool tuple_enableDeepCopyMode(T_TUPLE* tuple, bool enabled);
 
+bool tuple_deepCopyMode(const T_TUPLE* tuple);
+
 size_t tuple_size(const T_TUPLE* tuple);
+
+type_t tuple_type(const T_TUPLE* tuple);
 
 __ptr_t tuple_get(const T_TUPLE* tuple, size_t pos);
 #define tuple_get_(tuple, pos, type_cast) *(type_cast*) tuple_get(tuple, pos)

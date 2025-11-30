@@ -1,4 +1,6 @@
-#include <list.h>
+#include <dataStructures/list.h>
+#include <dataStructures/array.h>
+#include <dataStructures/tuple.h>
 #include <comparators.h>
 
 
@@ -201,6 +203,44 @@ T_LIST* new_list(type_t type) {
 }
 
 
+T_LIST* new_list_fromArray(const T_ARRAY* array) {
+    if (array == NULL) return NULL;
+
+    T_LIST* list = new_list(array_type(array));
+    if (list == NULL) return NULL;
+
+    list->deepCopyMode = array_deepCopyMode(array);
+
+    for (size_t i = 0; i < list->size; i++) {
+        if (!list_addLast(list, array_get(array, i))) {
+            delete_list(list);
+            return NULL;
+        }
+    }
+
+    return list;
+}
+
+
+T_LIST* new_list_fromTuple(const T_TUPLE* tuple) {
+    if (tuple == NULL) return NULL;
+
+    T_LIST* list = new_list(tuple_type(tuple));
+    if (list == NULL) return NULL;
+
+    list->deepCopyMode = tuple_deepCopyMode(tuple);
+
+    for (size_t i = 0; i < list->size; i++) {
+        if (!list_addLast(list, tuple_get(tuple, i))) {
+            delete_list(list);
+            return NULL;
+        }
+    }
+
+    return list;
+}
+
+
 T_LIST* clone_list(const T_LIST* list) {
     if (list == NULL) return NULL;
 
@@ -208,7 +248,7 @@ T_LIST* clone_list(const T_LIST* list) {
     if (cloned == NULL) return NULL;
 
     cloned->deepCopyMode = list->deepCopyMode;
-    
+
     if (!list_extendRight(cloned, list, false)) {
         delete_list(cloned);
         return NULL;
@@ -267,6 +307,11 @@ bool list_enableDeepCopyMode(T_LIST* list, bool enabled) {
 }
 
 
+bool list_deepCopyMode(const T_LIST* list) {
+    return (list == NULL) ? false : list->deepCopyMode;
+}
+
+
 bool list_markElementAsDeepCopied(T_LIST* list, size_t pos, bool deepCopied) {
     if (list == NULL || pos >= list->size) return false;
 
@@ -301,6 +346,11 @@ void list_clear(T_LIST* list) {
 
 size_t list_size(const T_LIST* list) {
     return (list == NULL) ? 0 : list->size;
+}
+
+
+type_t list_type(const T_LIST* list) {
+    return (list == NULL) ? TYPE_ARBITRARY : list->type;
 }
 
 

@@ -11,15 +11,23 @@
 
 T_ARRAY* new_array(type_t type, size_t initialCapacity);
 
+T_ARRAY* new_array_fromLinkedList(const T_LIST* list);
+
+T_ARRAY* new_array_fromTuple(const T_TUPLE* tuple);
+
 // clone_array(), delete_array() and compare_array() declared in <dataStructures/types.h>
 
 bool array_enableDeepCopyMode(T_ARRAY* array, bool enabled);
+
+bool array_deepCopyMode(const T_ARRAY* array);
 
 bool array_markElementAsDeepCopied(T_ARRAY* array, size_t pos, bool deepCopied);
 
 void array_clear(T_ARRAY* array);
 
 size_t array_size(const T_ARRAY* array);
+
+type_t array_type(const T_ARRAY* array);
 
 bool array_add(T_ARRAY* array, __ptr_t element, size_t pos);
 

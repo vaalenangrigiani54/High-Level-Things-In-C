@@ -1,5 +1,6 @@
-#include <tuple.h>
-#include <array.h>
+#include <dataStructures/tuple.h>
+#include <dataStructures/array.h>
+#include <dataStructures/list.h>
 #include <comparators.h>
 #include <hash.h>
 #include <stdarg.h>
@@ -73,6 +74,52 @@ T_TUPLE* new_tuple(size_t size, bool cloneElements, type_t type, ...) {
     }
 
     va_end(elements);
+    return tuple;
+}
+
+
+T_TUPLE* new_tuple_fromArray(const T_ARRAY* array) {
+    if (array == NULL) return NULL;
+
+    T_TUPLE* tuple = tupleAux_alloc(array_size(array), array_type(array), array_deepCopyMode(array));
+    if (tuple == NULL) return NULL;
+
+    tuple->deepCopyMode = tuple->deepCopiedElements;
+    T_FUNC_CLONE clone = type_getCloneFunction(tuple->type);
+
+    for (size_t i = 0; i < tuple->size; i++) {
+        if (!tupleAux_setElementAtPos(tuple, array_get(array, i), i, clone)) {
+            delete_tuple(tuple);
+            return NULL;
+        }
+    }
+
+    return tuple;
+}
+
+
+T_TUPLE* new_tuple_fromLinkedList(const T_LIST* list) {
+    if (list == NULL) return NULL;
+
+    T_TUPLE* tuple = tupleAux_alloc(list_size(list), list_type(list), list_deepCopyMode(list));
+    if (tuple == NULL) return NULL;
+
+    tuple->deepCopyMode = tuple->deepCopiedElements;
+    T_FUNC_CLONE clone = type_getCloneFunction(tuple->type);
+    listIterator_t i = listIter_begin(list);
+
+    while (listIter_hasNext(i)) {
+        __ptr_t element = listIter_get(i);
+        size_t pos = listIter_getPos(i);
+
+        if (!tupleAux_setElementAtPos(tuple, element, pos, clone)) {
+            delete_tuple(tuple);
+            return NULL;
+        }
+
+        listIter_next(i);
+    }
+
     return tuple;
 }
 
@@ -172,8 +219,18 @@ bool tuple_enableDeepCopyMode(T_TUPLE* tuple, bool enabled) {
 }
 
 
+bool tuple_deepCopyMode(const T_TUPLE* tuple) {
+    return (tuple == NULL) ? NULL : tuple->deepCopyMode;
+}
+
+
 size_t tuple_size(const T_TUPLE* tuple) {
-    return array_size((T_ARRAY*) tuple);
+    return (tuple == NULL) ? 0 : tuple->size;
+}
+
+
+type_t tuple_type(const T_TUPLE* tuple) {
+    return (tuple == NULL) ? 0 : tuple->type;
 }
 
 

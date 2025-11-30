@@ -15,15 +15,23 @@
 
 T_LIST* new_list(type_t type);
 
+T_LIST* new_list_fromArray(const T_ARRAY* array);
+
+T_LIST* new_list_fromTuple(const T_TUPLE* tuple);
+
 // clone_list(), delete_list() and compare_list() declared in <dataStructures/types.h>
 
 bool list_enableDeepCopyMode(T_LIST* list, bool enabled);
+
+bool list_deepCopyMode(const T_LIST* list);
 
 bool list_markElementAsDeepCopied(T_LIST* list, size_t pos, bool deepCopied);
 
 void list_clear(T_LIST* list);
 
 size_t list_size(const T_LIST* list);
+
+type_t list_type(const T_LIST* list);
 
 bool list_add(T_LIST* list, __ptr_t element, size_t pos);
 
